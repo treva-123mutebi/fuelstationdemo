@@ -60,8 +60,8 @@ endif;
                 <li class="uk-nav-header">
                   Control Center
                 </li>
-                <li><a href="cust_new.php">Register Sales</a></li>
-                <li><a href="supp_new.php">Register Stock Entry</a></li>
+                <li><a href="#">Register Sales</a></li>
+                <li><a href="#">Register Stock Entry</a></li>
                 
 
                 
