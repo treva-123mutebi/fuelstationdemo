@@ -30,7 +30,7 @@ $query=mysqli_query($con,"select * from branch where branch_id='$branch'")or die
                   <!-- Messages: style can be found in dropdown.less-->
 				  <li class="">
                 
-                    <a href="log.php" class="dropdown-toggle">
+                    <a href="#" class="dropdown-toggle">
                       <i class="glyphicon glyphicon-list-alt"></i>
                       History Log
                     </a>
@@ -116,7 +116,7 @@ $query=mysqli_query($con,"select * from branch where branch_id='$branch'")or die
 				   <!-- Tasks Menu -->
 				   <li class="dropdown notifications-menu">
                     <!-- Menu toggle button -->
-                    <a href="supp_new.php">
+                    <a href="#">
                       <i class="glyphicon glyphicon-list text-green"></i> Incoming Stock
                       
                     </a>
@@ -139,17 +139,17 @@ $query=mysqli_query($con,"select * from branch where branch_id='$branch'")or die
                         <ul class="menu">
                         
                           <li><!-- start notification -->
-                            <a href="inventory.php">
+                            <a href="#">
                               <i class="glyphicon glyphicon-ok text-green"></i>Stock Report
                             </a>
                           </li><!-- end notification -->
 						            <li><!-- start notification -->
-                         <a href="sales.php">
+                         <a href="#">
                               <i class="glyphicon glyphicon-usd text-blue"></i>Stock-Out Report
                             </a>
                           </li><!-- end notification -->
 					    <li><!-- start notification -->
-                         <a href="itemreport.php">
+                         <a href="#">
                               <i class="glyphicon glyphicon-th-list text-redr"></i>Item Report
                             </a>
                           </li><!-- end notification -->
