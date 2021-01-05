@@ -21,7 +21,7 @@
 		margin: 0 auto;
 		list-style: none;
 		padding:0;
-		border-radius: 50%;
+		border-radius: 40%;
 		-o-border-radius: 50%;
 		-ms-border-radius: 50%;
 		-webkit-border-radius: 50%;
