@@ -60,8 +60,8 @@ endif;
                 <li class="uk-nav-header">
                   Control Center
                 </li>
-                <li><a href="#">Register Sales</a></li>
-                <li><a href="#">Register Stock Entry</a></li>
+                <li><a href="supp_new.php">Register Stock Entry</a></li>
+                <li><a href="stationsales.php">Register Daily Sales</a></li>
                 
 
                 
@@ -85,12 +85,21 @@ endif;
                         <div>
                             <div class="uk-card uk-card-default uk-card-body">
                                 <span class="statistics-text">Total Sales as of today </span><br />
-                                <span style="font-size: small;" class="statistics-number">
-                                    Ugx 1,440,000.164
-                                    <span class="uk-label uk-label-success">
-                                        8% <span class="ion-arrow-up-c"></span>
-                                    </span>
+                                
+                                <?php 
+								$date = date("M. d, Y");
+								$branch_id = $_GET['id'];
+									$query = mysqli_query($con,"select SUM(totalsales) as total_balance from salesdemoview where DATE(`date`) = CURDATE() ") or die(mysqli_error($con));
+										$row1=mysqli_fetch_array($query);
+											
+								?>
+                                
+                                <span style="font-size: small;" class="uk-label uk-label-danger">
+                                    <br/><br/>
+                                    <?php echo $row1['total_balance'];?> UGX<br/>
+                                    
                                 </span>
+                                
                             </div>
                         </div>
                         <br/><br/>
@@ -99,8 +108,8 @@ endif;
                                 <span class="statistics-text">Stock Available</span><br />
                                 <span style="font-size: 15px;" class="statistics-number">
                                     Petrol : 123 Litres
-                                    <span class="uk-label uk-label-danger">
-                                        13% <span class="ion-arrow-down-c"></span>
+                                    <!--<span class="uk-label uk-label-danger">
+                                        13% <span class="ion-arrow-down-c"></span>-->
                                     </span>
                                 </span>
                             </div>

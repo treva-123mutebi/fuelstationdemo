@@ -5,14 +5,14 @@ endif;
 
 include('../dist/includes/dbcon.php');
 	$id = $_POST['id'];
-    $prod_qty =$_POST['prod_qty'];
-    $prod_name =$_POST['prod_name'];
-    $expirydate =$_POST['expirydate'];
+    $prod_qty =$_POST['qty'];
+    
+    
     $unitprice =$_POST['unitprice'];
 	$cid =$_POST['cid'];
 	
 	
-	mysqli_query($con,"UPDATE temp_deposit set prod_qty='$prod_qty',prod_name='$prod_name',expirydate='$expirydate',unitprice='$unitprice' where temp_deposit_id='$id'")or die(mysqli_error());
+	mysqli_query($con,"UPDATE temp_refill set prod_qty='$prod_qty',unitprice='$unitprice' where temprefillid='$id'")or die(mysqli_error());
 	
 	
 	echo "<script>document.location='prod_transaction.php?cid=$cid'</script>";  

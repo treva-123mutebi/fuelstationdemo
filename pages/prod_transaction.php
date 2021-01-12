@@ -60,39 +60,58 @@ javascript:window.history.forward(1);
                   <form method="post" action="prod_add.php">
 				  <div class="row" style="min-height:400px">
 					
-					 <div class="col-md-2">
+					 <div class="col-md-4">
 						  <div class="form-group">
-							<label for="date">Select Item</label>
+							<label for="date">Select Storage Tank</label>
 							 
-								<select class="form-control select2" name="cat_name" tabindex="1" autofocus required>
+								<select class="form-control select2" name="storageunitname" tabindex="1" autofocus required>
 								<?php
                   $branch=$_SESSION['branch'];
                   $cid=$_REQUEST['cid'];
 								  include('../dist/includes/dbcon.php');
-									 $query2=mysqli_query($con,"select * from  category  order by cat_name")or die(mysqli_error());
+									 $query2=mysqli_query($con,"select * from  storageunits  order by storageunitname")or die(mysqli_error());
 									    while($row=mysqli_fetch_array($query2)){
 								?>
-										<option value="<?php echo $row['cat_id'];?>"><?php echo $row['cat_name'];?></option>
+										<option value="<?php echo $row['stunit_id'];?>"><?php echo $row['storageunitname'];?></option>
 								  <?php }?>
 								</select>
 						    <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
 						  </div><!-- /.form group -->
                     </div>
-                    <div class=" col-md-2">
+            <div class=" col-md-4">
 						<div class="form-group">
-							<label for="date">Unit Price</label>
+            <label for="date">Select Station Product</label>
+							 
+               <select class="form-control select2" name="stationprod_name" tabindex="1" autofocus required>
+               <?php
+                 $branch=$_SESSION['branch'];
+                 $cid=$_REQUEST['cid'];
+                 include('../dist/includes/dbcon.php');
+                  $query2=mysqli_query($con,"select * from  stationproducts  order by stationprod_name")or die(mysqli_error());
+                     while($row=mysqli_fetch_array($query2)){
+               ?>
+                   <option value="<?php echo $row['prod_id'];?>"><?php echo $row['stationprod_name'];?></option>
+                 <?php }?>
+               </select>
+						</div><!-- /.form group -->
+                     </div>
+                     
+                     
+            <div class=" col-md-2">
+						<div class="form-group">
+							<label style="font-size: 12px;" for="date">Unit Price</label>
 							<div class="input-group">
               <?php
               include('../dist/includes/dbcon.php');
               ?>
-               <input type="number" class="form-control pull-right" id="date" name="unitprice" placeholder="Unit Price" tabindex="2"  min="1"  required>
+                <input type="number" class="form-control pull-right" id="date" name="unitprice" placeholder="Unit Price /ltr" tabindex="2" value="1" min="1"  required>
                 <?php ?>
 							</div><!-- /.input group -->
-						</div><!-- /.form group -->
-                     </div>
+						</div><!--form group-->
+            </div><!--column-->
 					<div class=" col-md-2">
 						<div class="form-group">
-							<label for="date">Quantity</label>
+							<label for="date" style="font-size: 12px;">Stock In Quantity</label>
 							<div class="input-group">
               <?php
               include('../dist/includes/dbcon.php');
@@ -101,40 +120,11 @@ javascript:window.history.forward(1);
                 <?php ?>
 							</div><!-- /.input group -->
 						</div><!-- /.form group -->
-                     </div>
-                     <div class=" col-md-2">
-						<div class="form-group">
-							<label for="date">Batch Number</label>
-							<div class="input-group">
-              <?php
-              include('../dist/includes/dbcon.php');
-              ?>
-                <input type="text" class="form-control pull-right" id="date" name="prod_name" placeholder="Batch Number" tabindex="2"  required><br/>
-                <?php ?>
-							</div><!-- /.input group -->
-						</div><!-- /.form group -->
-                     </div>
-                     <div class=" col-md-2">
-						<div class="form-group">
-							<label for="date">Expiry Date</label>
-							<div class="input-group">
-              <?php
-              include('../dist/includes/dbcon.php');
-              ?>
-                <input type="date" class="form-control pull-right" id="date" name="expirydate" placeholder="yyyy/mm/dd" tabindex="2" min="<?php echo date('Y-m-d');?>"  required><br/>
-                <?php ?>
-                <br/>
-                <input type="remark" class="form-control pull-right" id="date" name="remark" placeholder="remark" tabindex="2"   required><br/>
-                <br/>
-							</div><!-- /.input group -->
-						</div><!-- /.form group -->
-           </div>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
+            </div><!--column-->
+                     
+                     
+           
+           
            
 					<div class="col-md-2">
 						<div class="form-group">
@@ -156,21 +146,18 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
                   <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>Quantity</th>
-						       
-                        <th>Batch Number</th>
-                        <th>Item Description</th>
-                        <th>Expiry Date</th>
-                        <th>Unit Price</th>
-                        <th>Remark</th>
-						            <th>Total</th>
+                        <th>Storage tank </th>
+                        <th> Station Product</th>
+                        <th> Unit Price</th>
+                        <th> Quantity</th>
+                        <th>Total</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
 		
-    $query=mysqli_query($con,"select * from temp_deposit natural join category where branch_id='$branch' order by prod_name")or die(mysqli_error());
+    $query=mysqli_query($con,"select * from temp_refill natural join storageunits natural join stationproducts where branch_id='$branch' order by storageunitname")or die(mysqli_error());
     $grand=0;
 		while($row=mysqli_fetch_array($query)){
       $total=$row['prod_qty']*$row['unitprice'];
@@ -179,22 +166,22 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
 		
 ?>
                       <tr >
-						<td><?php echo $row['prod_qty'];?></td>
-                        <td class="record"><?php echo $row['prod_name'];?></td>
-                        <td class="record"><?php echo $row['cat_name'];?></td>
-                        <td class="record"><?php echo $row['expirydate'];?></td>
-            <td><?php echo number_format($row['unitprice'],2);?></td>
-            <td class="record"><?php echo $row['remark'];?></td>
+						<td><?php echo $row['storageunitname'];?></td>
+                        <td class="record"><?php echo $row['stationprod_name'];?></td>
+                        <td class="record"><?php echo $row['unitprice'];?></td>
+                        <td class="record"><?php echo $row['prod_qty'];?></td>
+            
+            
 						<td><?php echo number_format($total,2);?></td>
                         <td>
 							
-							<a href="#updateordinance<?php echo $row['temp_deposit_id'];?>" data-target="#updateordinance<?php echo $row['temp_deposit_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
+							<a href="#updateordinance<?php echo $row['temprefillid'];?>" data-target="#updateordinance<?php echo $row['temprefillid'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-edit text-blue"></i></a>
 
-              <a href="#delete<?php echo $row['temp_deposit_id'];?>" data-target="#delete<?php echo $row['temp_deposit_id'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>
+              <a href="#delete<?php echo $row['temprefillid'];?>" data-target="#delete<?php echo $row['temprefillid'];?>" data-toggle="modal" style="color:#fff;" class="small-box-footer"><i class="glyphicon glyphicon-trash text-red"></i></a>
               
 						</td>
                       </tr>
-					  <div id="updateordinance<?php echo $row['temp_deposit_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+					  <div id="updateordinance<?php echo $row['temprefillid'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog">
 	  <div class="modal-content" style="height:auto">
               <div class="modal-header">
@@ -205,29 +192,29 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
               <div class="modal-body">
 			  <form class="form-horizontal" method="post" action="prod_update.php" enctype='multipart/form-data'>
 					<input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>  	
-          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_deposit_id'];?>" required>  
-        <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Batch Number</label>
-					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="prod_name" value="<?php echo $row['prod_name'];?>" required>  
-					</div>
-        </div>
-        <div class="form-group">
-					<label class="control-label col-lg-3" for="price">Expiry Date</label>
-					<div class="col-lg-9">
-					  <input type="date" class="form-control" id="price" name="expirydate" min="<?php echo date('Y-m-d');?>" value="<?php echo $row['expirydate'];?>" required>  
-					</div>
-        </div>
+          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temprefillid'];?>" required>  
         <div class="form-group">
 					<label class="control-label col-lg-3" for="price">Unit Price</label>
 					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="unitprice" min="1" value="<?php echo $row['unitprice'];?>" required>  
+					  <input type="text" class="form-control" id="price" name="unitprice" value="<?php echo $row['unitprice'];?>" required>  
+					</div>
+        </div>
+        <div class="form-group">
+					<label class="control-label col-lg-3" for="price">Quantity</label>
+					<div class="col-lg-9">
+					  <input type="number" class="form-control" id="price" name="qty" min="1" value="<?php echo $row['prod_qty'];?>" required>  
+					</div>
+        </div>
+        <div class="form-group">
+					<label class="control-label col-lg-3" for="price">Station Product</label>
+					<div class="col-lg-9">
+					  <input type="text" class="form-control" id="price" name="stationprod_name" min="1" value="<?php echo $row['stationprod_name'];?>" readonly required>  
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-lg-3" for="price">Quantity</label>
+					<label class="control-label col-lg-3" for="price">Storage Unit</label>
 					<div class="col-lg-9">
-					  <input type="text" class="form-control" id="price" name="prod_qty" min="1" value="<?php echo $row['prod_qty'];?>" required>  
+					  <input type="text" class="form-control" id="price" name="storageunitname" min="1" value="<?php echo $row['storageunitname'];?>" readonly required>  
 					</div>
 				</div>
 				
@@ -242,7 +229,7 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
         </div><!--end of modal-dialog-->
  </div>
  <!--end of modal-->  
-<div id="delete<?php echo $row['temp_deposit_id'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div id="delete<?php echo $row['temprefillid'];?>" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content" style="height:auto">
               <div class="modal-header">
@@ -253,8 +240,8 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
               <div class="modal-body">
         <form class="form-horizontal" method="post" action="prod_delete.php" enctype='multipart/form-data'>
           <input type="hidden" class="form-control" name="cid" value="<?php echo $cid;?>" required>   
-          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temp_deposit_id'];?>" required>  
-        <p>Are you sure you want to remove <?php echo $row['cat_name'];?>?</p>
+          <input type="hidden" class="form-control" id="price" name="id" value="<?php echo $row['temprefillid'];?>" required>  
+        <p>Are you sure you want to remove <?php echo $row['stationprod_name'];?>?</p>
         
               </div><br>
               <div class="modal-footer">
@@ -287,7 +274,7 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
                
                 <div class="box-body">
                   <!-- Date range -->
-          <form method="post" name="autoSumForm" action="reviewstockin_add.php">
+          <form method="post" name="autoSumForm">
 				  <div class="row">
 					 <div class="col-md-12">
 						  
@@ -335,9 +322,9 @@ $queryb=mysqli_query($con,"select balance from customer where cust_id='$cid'")or
                
                   
                  
-                      <button class="btn btn-lg btn-block btn-primary" id="daterange-btn" name="cash" type="submit"  tabindex="7">
-                        SEND TO SUPERVISOR 
-                      </button>
+                      <a href="home.php" class="btn btn-lg btn-block btn-primary">
+                        SUBMIT 
+                      </a>
 					  
                         <a href="prod_cancel.php" class="btn btn-lg btn-block" id="daterange-btn" type="reset" tabindex="8" >CANCEL STOCK-IN</a>
                       

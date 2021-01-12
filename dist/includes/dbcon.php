@@ -1,5 +1,5 @@
 <?php
-$con = mysqli_connect("localhost","root","","fuelstationdb");
+$con = mysqli_connect("localhost","engomash_mutebi","Trevor@2014","engomash_fms");
 
 // Check connection
 if (mysqli_connect_errno())

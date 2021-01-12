@@ -19,25 +19,25 @@ include('../dist/includes/dbcon.php');
 		//$change = $_POST['change'];
 
 		mysqli_query($con,"INSERT INTO reviewstockin(supplier_id,user_id,total,date,branch_id,reviewstatus) 
-	VALUES('$cid','$id','$total','$date','$branch','pending')")or die(mysqli_error($con));
+	VALUES('$cid','$id','$total','$date','$branch','complete')")or die(mysqli_error($con));
 		
 	$reviewstockin_id=mysqli_insert_id($con);
 	$_SESSION['sid']=$reviewstockin_id;
-	$query=mysqli_query($con,"select * from temp_deposit where branch_id='$branch'")or die(mysqli_error($con));
+	$query=mysqli_query($con,"select * from temp_refill where branch_id='$branch'")or die(mysqli_error($con));
 		while ($row=mysqli_fetch_array($query))
 		{
-			$cat_id=$row['cat_id'];	
- 			$prod_qty=$row['prod_qty'];
+			$stunit_id=$row['stunit_id'];	
+ 			$prod_id=$row['prod_id'];
             $unitprice=$row['unitprice'];
-            $prod_name=$row['prod_name'];
-			$expirydate=$row['expirydate'];
+            $prod_qty=$row['prod_qty'];
+			
 			$supplier_id=$row['supplier_id'];
-			$remark=$row['remark'];
 			
 			
-            mysqli_query($con,"INSERT INTO reviewproduct(cat_id,prod_qty,prod_price,prod_name,expirydate,reviewstockin_id,supplier_id,branch_id,remark) VALUES('$cat_id','$prod_qty','$unitprice','$prod_name','$expirydate','$reviewstockin_id','$supplier_id','$branch','$remark')")or die(mysqli_error($con));
-            echo "<script>document.location='prod_review.php?cid=$cid'</script>";
-			//mysqli_query($con,"UPDATE product SET prod_qty=prod_qty-'$qty' where prod_id='$pid' and branch_id='$branch'") or die(mysqli_error($con)); 
+			
+            mysqli_query($con,"INSERT INTO stationinventory(stunit_id,prod_id) VALUES('$stunit_id','$prod_id')")or die(mysqli_error($con));
+            //echo "<script>document.location='prod_review.php?cid=$cid'</script>";
+			mysqli_query($con,"UPDATE stationinventory SET qty_available=qty_available+'$prod_qty' where prod_id='$prod_id' and branch_id='$branch'") or die(mysqli_error($con)); 
 		}
 		
 		//$query1=mysqli_query($con,"SELECT or_no FROM payment NATURAL JOIN sales WHERE modeofpayment =  'cash' ORDER BY payment_id DESC LIMIT 0 , 1")or die(mysqli_error($con));
@@ -58,8 +58,8 @@ include('../dist/includes/dbcon.php');
 	//VALUES('$cid','$id','$total','$date','$branch','$date','$total','paid','$sales_id','$or')")or die(mysqli_error($con));
 				//echo "<script>document.location='receipt.php?cid=$cid'</script>";  	
 		
-		$result=mysqli_query($con,"DELETE FROM temp_deposit where branch_id='$branch'")	or die(mysqli_error($con));
-		//echo "<script>document.location='receipt.php?cid=$cid'</script>";  	
+		$result=mysqli_query($con,"DELETE FROM temp_refill where branch_id='$branch'")	or die(mysqli_error($con));
+		echo "<script>document.location='home.php'</script>";  	
 		
 	
 ?>

@@ -116,8 +116,8 @@ $query=mysqli_query($con,"select * from branch where branch_id='$branch'")or die
 				   <!-- Tasks Menu -->
 				   <li class="dropdown notifications-menu">
                     <!-- Menu toggle button -->
-                    <a href="#">
-                      <i class="glyphicon glyphicon-list text-green"></i> Incoming Stock
+                    <a href="salesview.php">
+                      <i class="glyphicon glyphicon-list text-green"></i> Station Sales Details
                       
                     </a>
                     <ul class="dropdown-menu">
